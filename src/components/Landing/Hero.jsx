@@ -6,10 +6,11 @@ import featureImage from "../../assets/landingpage/feature-image.svg";
 import curve1 from "../../assets/landingpage/curve-1.svg";
 import curve2 from "../../assets/landingpage/curve-2.svg";
 import laptopImage from "../../assets/landingpage/laptop.svg";
+import Footer from "./Footer";
 
 const Hero = () => {
     return (
-        <div className="bg-[var(--white)] relative">
+        <div className=" bg-[var(--white)] relative">
             <LandingNavbar />
             <div className="lg:p-12 p-6 text-[var(--black)] w-full">
                 <div className=" relative flex flex-wrap items-start justify-between w-full">
@@ -84,9 +85,15 @@ const Hero = () => {
                     </div>
                     <img src={laptopImage} alt="press laptop" className="hidden w-[364px] h-[267px] sm:block lg:w-[506px] lg:h-[390px]" />
                 </div>
-            </div>
 
-            
+                <div className="mt-6 lg:mt-20 lg:px-24 p-6">
+                    <h1 className="text-[var(--red-primary)] text-lg lg:text-4xl mb-2 sm:mb-6">About ceVBuilder</h1>
+                    <p className="font-light text-base/7 lg:text-2xl/11">
+                    Are you ready to take your career journey to the next level? Look no further than our state-of-the-art Resume Builder application! We understand that crafting a compelling resume is your ticket to landing your dream job, and our platform is designed to empower you in this endeavor.
+                    </p>
+                </div>
+            </div>
+            <Footer />  
         </div>
     )
 }
