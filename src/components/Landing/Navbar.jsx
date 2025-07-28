@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import Logo from "./Logo"
+import Logo from "../UI/Logo"
 import menu from '../../assets/landingpage/menu.svg'
 import cancel from '../../assets/landingpage/cancel.svg'
 import Button from '../UI/Button'
