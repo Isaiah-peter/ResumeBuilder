@@ -7,7 +7,7 @@ import { POpen, PClose, Github, Google } from '../../assets/auth';
 const Register = () => {
     return (
         <div className="flex min-h-screen  bg-[var(--white)]">
-            <div className="flex-1 min-h-screen bg-size-[100%_100%] bg-center flex items-center justify-center bg-[url(/src/assets/auth/image.png)]">
+            <div className="md:flex-1 min-h-screen bg-size-[100%_100%] bg-center md:flex hidden items-center justify-center bg-[url(/src/assets/auth/image.png)]">
                 <div className='bg-[var(--red-primary)]/80 rounded-lg py-20 px-6'>
                     <Logo width="200px" height="50px" />
                 </div>
@@ -20,7 +20,7 @@ const Register = () => {
                     </svg>
                 </a>
 
-                <div className="pt-20 px-20">
+                <div className="pt-20 md:px-20 px-5">
                     <AuthHeader reglog={"register"} />
 
                     <form className="mt-5">
