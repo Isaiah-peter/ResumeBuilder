@@ -1,7 +1,7 @@
-import POpen from "./p-open.svg";
-import PClose from "./p-close.svg";
+
 import Github from "./github.svg";
 import Google from "./google.svg";
+import Mark from "./mark.svg";
 
 
-export { POpen, PClose, Github, Google };
+export { Github, Google, Mark };
