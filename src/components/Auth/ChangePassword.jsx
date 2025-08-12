@@ -7,6 +7,19 @@ const ChangePassword = () => {
     const [openP, setOpenP] = useState(false)
     const [otp, setOtp] = useState(false)
     const [openPC, setOpenPC] = useState(false)
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (password !== confirmPassword) {
+            alert("Passwords do not match");
+            return;
+        }
+        // Handle password change logic here
+        console.log("Password changed successfully");
+        setOtp(true); // Simulate OTP input after password change
+    }
 
     const handleOpenP = () => {
         setOpenP(!openP)
@@ -37,14 +50,17 @@ const ChangePassword = () => {
                     {!otp ? (
                         <div className='flex flex-col items-center justify-center m-auto'>
                             <h2 className='text-center lg:text-3xl text-2xl font-bold mb-4'>Create Password</h2>
-                            <p className='text-center text-[#666666] mb-4'>Please create password</p>
+                            <p className='text-center text-[#666666]'>Please create password</p>
                             
                             <form className="mt-5">
                                 <fieldset>
                                     <div className="flex flex-col gap-2 mt-2">
                                         <label className='text-md font-normal' for="email">New Password</label>
                                         <div className='flex w-full items-center border border-[var(--gray-light)]'>
-                                            <Input placeholder={"**********"} type={openP ? "text" : "password"} className='border-none w-[92%]' />
+                                            <Input placeholder={"**********"} 
+                                                type={openP ? "text" : "password"} className='border-none w-[92%]'
+                                                 value={password}  
+                                                 onChange={(e) => setPassword(e.target.value)} />
                                             <div onClick={handleOpenP}>
                                                 {
                                                     !openP ? (
@@ -64,7 +80,11 @@ const ChangePassword = () => {
                                     <div className="flex flex-col gap-2 mt-2">
                                         <label className='text-md font-normal' for="email">Confirm Password</label>
                                         <div className='flex w-full items-center border border-[var(--gray-light)]'>
-                                            <Input placeholder={"**********"} type={openPC? "text" : "password"} className='border-none w-[92%]' />
+                                            <Input placeholder={"**********"} 
+                                                type={openPC? "text" : "password"} className='border-none w-[92%]'
+                                                value={confirmPassword}  
+                                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                            />
                                             <div onClick={handleOpenPC}>
                                                 {
                                                     !openPC ? (
@@ -83,7 +103,7 @@ const ChangePassword = () => {
                                     </div>
         
                                     <div className='w-full block mt-5'>
-                                        <button type="submit" className='w-full px-4 cursor-pointer py-2 bg-[var(--red-primary)] rounded text-[var(--white)]'>Create account</button>
+                                        <button type="submit" onClick={handleSubmit} className='w-full px-4 cursor-pointer py-2 bg-[var(--red-primary)] rounded text-[var(--white)]'>Create account</button>
                                     </div>
                                 </fieldset>
                             </form>

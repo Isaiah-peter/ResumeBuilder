@@ -7,6 +7,19 @@ import { Github, Google } from '../../assets/auth';
 const Register = () => {
     const [openP, setOpenP] = useState(false)
     const [openPC, setOpenPC] = useState(false)
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
+    
+        const handleSubmit = (e) => {
+            e.preventDefault();
+            if (password !== confirmPassword) {
+                alert("Passwords do not match");
+                return;
+            }
+            // Handle password change logic here
+            console.log("Password changed successfully");
+        }
+
 
     const handleOpenP = () => {
         setOpenP(!openP)
@@ -43,7 +56,12 @@ const Register = () => {
                             <div className="flex flex-col gap-2 mt-2">
                                 <label className='text-md font-normal' for="email">Password</label>
                                 <div className='flex w-full items-center border border-[var(--gray-light)]'>
-                                    <Input placeholder={"**********"} type={openP ? "text" : "password"} className='border-none w-[92%]' />
+                                    <Input 
+                                    placeholder={"**********"} type={openP ? "text" : "password"} 
+                                    className='border-none w-[92%]'
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                     />
                                     <div onClick={handleOpenP}>
                                         {
                                             !openP ? (
@@ -63,7 +81,12 @@ const Register = () => {
                             <div className="flex flex-col gap-2 mt-2">
                                 <label className='text-md font-normal' for="email">Confirm Password</label>
                                 <div className='flex w-full items-center border border-[var(--gray-light)]'>
-                                    <Input placeholder={"**********"} type={openPC? "text" : "password"} className='border-none w-[92%]' />
+                                    <Input 
+                                    placeholder={"**********"} type={openPC? "text" : "password"} 
+                                    className='border-none w-[92%]' 
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    />
                                     <div onClick={handleOpenPC}>
                                         {
                                             !openPC ? (
@@ -82,7 +105,7 @@ const Register = () => {
                             </div>
 
                             <div className='w-full block mt-5'>
-                                <button type="submit" className='w-full px-4 cursor-pointer py-2 bg-[var(--red-primary)] rounded text-[var(--white)]'>Create account</button>
+                                <button type="submit" onClick={handleSubmit} className='w-full px-4 cursor-pointer py-2 bg-[var(--red-primary)] rounded text-[var(--white)]'>Create account</button>
                             </div>
                         </fieldset>
                     </form>
