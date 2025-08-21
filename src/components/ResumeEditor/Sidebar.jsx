@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { useResumeContext } from './Editor';
 
-const Sidebar = () => {
-  const [activeSection, setActiveSection] = useState('personal');
-  const [isCollapsed, setIsCollapsed] = useState(false);
+const Sidebar = ({ activeSection, setActiveSection }) => {
+  const [isCollapsed, setIsCollapsed] = useState(true);
+  const { resumeData } = useResumeContext();
 
   const sidebarItems = [
     {
@@ -157,15 +158,65 @@ const Sidebar = () => {
   ];
 
   const handleSectionClick = (sectionId) => {
-    setActiveSection(sectionId);
+    if (setActiveSection) {
+      setActiveSection(sectionId);
+    }
   };
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
   };
 
+  // Calculate progress based on completed sections
+  const calculateProgress = () => {
+    let completedSections = 0;
+    const totalSections = 7;
+
+    // Check Personal Info
+    if (resumeData.personalInfo.firstName && resumeData.personalInfo.lastName && 
+        resumeData.personalInfo.email && resumeData.personalInfo.phone) {
+      completedSections++;
+    }
+
+    // Check Experience (optional but count if has any)
+    if (resumeData.experience.length > 0) {
+      completedSections++;
+    }
+
+    // Check Education (optional but count if has any)
+    if (resumeData.education.length > 0) {
+      completedSections++;
+    }
+
+    // Check Skills (optional but count if has any)
+    if (resumeData.skills.length > 0) {
+      completedSections++;
+    }
+
+    // Check Projects (optional but count if has any)
+    if (resumeData.projects.length > 0) {
+      completedSections++;
+    }
+
+    // Check Contact (optional but count if has any)
+    if (resumeData.contact.linkedin || resumeData.contact.github || 
+        resumeData.contact.website || resumeData.contact.portfolio) {
+      completedSections++;
+    }
+
+    // Check Certifications (optional but count if has any)
+    if (resumeData.certifications.length > 0) {
+      completedSections++;
+    }
+
+    return { completed: completedSections, total: totalSections };
+  };
+
+  const progress = calculateProgress();
+  const progressPercentage = Math.round((progress.completed / progress.total) * 100);
+
   return (
-    <div className={`${isCollapsed ? 'w-20' : 'w-64'} bg-[var(--white)] min-h-screen h-full shadow-lg border-r border-[var(--gray-light)] flex flex-col transition-all duration-300 md:relative fixed md:translate-x-0 z-50`}>
+    <div className={`${isCollapsed ? 'w-20' : 'w-64'} bg-[var(--white)] min-h-screen h-full shadow-lg border-r border-[var(--gray-light)] flex flex-col transition-all duration-300 md:relative fixed md:translate-x-0 z-30`}>
       
       {/* Toggle Button */}
       <div className="p-4 border-b border-[var(--gray-light)] flex justify-between items-center">
@@ -195,7 +246,7 @@ const Sidebar = () => {
                 onClick={() => handleSectionClick(item.id)}
                 className={`w-full flex items-center ${isCollapsed ? 'justify-center px-2' : 'gap-3 px-4'} py-3 rounded-lg text-left transition-all duration-200 hover:bg-[var(--gray-light)] ${
                   activeSection === item.id
-                    ? 'bg-[var(--blue-primary)] text-[var(--white)] shadow-md'
+                    ? 'bg-[var(--red-primary)] text-[var(--white)] shadow-md hover:bg-[var(--red-primary)]'
                     : 'text-[var(--gray-dark)] hover:text-[var(--black)]'
                 }`}
                 title={isCollapsed ? item.label : ''}
@@ -220,16 +271,21 @@ const Sidebar = () => {
           <div className="mb-2">
             <div className="flex justify-between items-center mb-1">
               <span className="text-sm font-medium text-[var(--gray-dark)]">Progress</span>
-              <span className="text-sm text-[var(--gray-medium)]">3/6</span>
+              <span className="text-sm text-[var(--gray-medium)]">{progress.completed}/{progress.total}</span>
             </div>
             <div className="w-full bg-[var(--gray-light)] rounded-full h-2">
               <div 
                 className="bg-[var(--blue-primary)] h-2 rounded-full transition-all duration-300" 
-                style={{ width: '50%' }}
+                style={{ width: `${progressPercentage}%` }}
               ></div>
             </div>
           </div>
-          <p className="text-xs text-[var(--gray-medium)]">Complete all sections to finish your resume</p>
+          <p className="text-xs text-[var(--gray-medium)]">
+            {progressPercentage === 100 ? 
+              '🎉 Resume completed! Ready to download.' : 
+              'Complete sections to build your resume'
+            }
+          </p>
         </div>
       )}
     </div>
